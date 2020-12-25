@@ -18,7 +18,6 @@ def draw_hangman(stage):
 
 def start_guessing(word):
     word_str = word
-    word = list(word)
 
     # Wait for player
     console.print("[green]Ya estás aquí?[/][italic] Presionar Enter si es así...[/]")
@@ -28,15 +27,15 @@ def start_guessing(word):
     console.print("Perfecto!", style="bold red")
     sleep(1)
 
-    guessed_word = ["__ "] * len(word)
+    word_completion = ["__ "] * len(word)
     alert = ""
     stage = 0
     lose_state = 0 # 1 if player loses
 
     # Start game
-    while guessed_word != word:
+    while word_completion != word:
         console.clear()
-        console.print(guessed_word, style="blue")
+        console.print(word_completion, style="blue")
 
         if alert:
             console.print()
@@ -55,7 +54,8 @@ def start_guessing(word):
         # Continue game if valid char
         if guessed_char in word:
             i = word_str.find(guessed_char)
-            guessed_word[i] = f"{guessed_char}"
+            word_completion[i] = f"{guessed_char}"
+            word_str = word_str[0:i] + "$" + word_str[i+1:]
             alert = "Bien! Adivinaste una letra!"
         else:
             if stage != 5:
@@ -73,7 +73,7 @@ def start_guessing(word):
     else:
         draw_hangman(6)
         console.print()
-        console.print("Lo siento. Perdiste el juego :c", style="bold red")
+        console.print("Lo siento. Perdiste el juego :c La palabra era: " + word, style="bold red")
 
     console.print("\nPresiona Enter para finalizar el juego", style="white")
     console.input()

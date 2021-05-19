@@ -1,7 +1,8 @@
- # Python hangman
+# Python hangman
 from console import console
 from time import sleep
 from hangman_pics import HANGMAN_PICS
+
 
 def get_word():
     word = console.input("[bold red]Ingrese la palabra a adivinar: [/]")
@@ -10,11 +11,13 @@ def get_word():
     console.clear()
     return word
 
+
 def draw_hangman(stage):
     """Draw hangman on the console. Stage 0 is complete hangman, 6 is no hangman."""
-    
+
     console.print(HANGMAN_PICS[stage], style="deep_pink4")
     console.print()
+
 
 def start_guessing(word):
     word_str = word
@@ -30,10 +33,10 @@ def start_guessing(word):
     word_completion = ["__ "] * len(word)
     alert = ""
     stage = 0
-    lose_state = 0 # 1 if player loses
+    lose_state = 0  # 1 if player loses
 
     # Start game
-    while word_completion != word:
+    while "".join(word_completion) != word:
         console.clear()
         console.print(word_completion, style="blue")
 
@@ -55,7 +58,7 @@ def start_guessing(word):
         if guessed_char in word:
             i = word_str.find(guessed_char)
             word_completion[i] = f"{guessed_char}"
-            word_str = word_str[0:i] + "$" + word_str[i+1:]
+            word_str = word_str[0:i] + "$" + word_str[i + 1 :]
             alert = "Bien! Adivinaste una letra!"
         else:
             if stage != 5:
@@ -73,13 +76,17 @@ def start_guessing(word):
     else:
         draw_hangman(6)
         console.print()
-        console.print("Lo siento. Perdiste el juego :c La palabra era: " + word, style="bold red")
+        console.print(
+            "Lo siento. Perdiste el juego :c La palabra era: " + word, style="bold red"
+        )
 
     console.print("\nPresiona Enter para finalizar el juego", style="white")
     console.input()
+
 
 if __name__ == "__main__":
     console.clear()
 
     word = get_word()
     start_guessing(word)
+

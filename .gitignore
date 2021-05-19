@@ -1,3 +1,5 @@
 /.vscode
+/.venv
+/.vim
 /venv
 /__pycache__
